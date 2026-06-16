@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hftech/migrate/internal/migration"
+	"github.com/agudelo-diego/migrations-system/migration"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 

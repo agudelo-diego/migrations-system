@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/hftech/migrate/internal/migration"
+	"github.com/agudelo-diego/migrations-system/migration"
 )
 
 func runValidate(ctx context.Context, runner *migration.Runner) {

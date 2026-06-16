@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/hftech/migrate/internal/migration"
+	"github.com/agudelo-diego/migrations-system/migration"
 )
 
 var templates = map[migration.Type]string{
