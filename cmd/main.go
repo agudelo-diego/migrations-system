@@ -10,6 +10,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+// kk
 func main() {
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
