@@ -49,7 +49,9 @@ func (r *Runner) Collect() ([]Migration, error) {
 		for _, file := range files {
 			version, migType, name, err := ParseFilename(file)
 			if err != nil {
-				return nil, fmt.Errorf("[%s] %w", mod.Name, err)
+				// ← warning y continúa, no rompe
+				fmt.Printf("  ⚠️   [%s] ignorando '%s': nombre inválido\n", mod.Name, file)
+				continue
 			}
 
 			content, err := fs.ReadFile(mod.FS, file)
@@ -119,7 +121,8 @@ func (r *Runner) Up(ctx context.Context) ([]RunResult, error) {
 				Error:     err,
 				Duration:  time.Since(start),
 			})
-			return results, fmt.Errorf("[%s] %s:\n  %w", m.Module, m.Filename, err)
+			// ← no retorna error, continúa con las demás
+			continue
 		}
 
 		if _, err := tx.Exec(ctx,
@@ -130,11 +133,21 @@ func (r *Runner) Up(ctx context.Context) ([]RunResult, error) {
 			string(m.Type), checksum(m.Content),
 		); err != nil {
 			tx.Rollback(ctx)
-			return results, err
+			results = append(results, RunResult{
+				Migration: m,
+				Error:     err,
+				Duration:  time.Since(start),
+			})
+			continue
 		}
 
 		if err := tx.Commit(ctx); err != nil {
-			return results, err
+			results = append(results, RunResult{
+				Migration: m,
+				Error:     err,
+				Duration:  time.Since(start),
+			})
+			continue
 		}
 
 		results = append(results, RunResult{
