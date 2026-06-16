@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"time"
 )
@@ -75,14 +76,26 @@ func printHelp(version string) {
 	fmt.Printf("    %s%-10s%s %s\n", Green, "seed", Reset, "Datos iniciales (INSERT)")
 
 	fmt.Printf("\n  %sEjemplos:%s\n\n", Bold, Reset)
-	fmt.Printf("    migrate up\n")
-	fmt.Printf("    migrate status\n")
-	fmt.Printf("    migrate validate\n")
-	fmt.Printf("    migrate new treasury table  create_bank_accounts\n")
-	fmt.Printf("    migrate new treasury sp     bank_accounts_create_v1\n")
-	fmt.Printf("    migrate new treasury seed   payment_methods\n")
+	fmt.Printf("     up\n")
+	fmt.Printf("     status\n")
+	fmt.Printf("     validate\n")
+	fmt.Printf("     new treasury table  create_bank_accounts\n")
+	fmt.Printf("     new treasury sp     bank_accounts_create_v1\n")
+	fmt.Printf("     new treasury seed   payment_methods\n")
 
-	fmt.Printf("\n  %sVariables de entorno:%s\n\n", Bold, Reset)
-	fmt.Printf("    %s%-20s%s postgres://user:pass@host:port/dbname\n", Cyan, "DATABASE_URL", Reset)
-	fmt.Printf("    %s%-20s%s ruta al directorio de migraciones\n\n", Cyan, "MIGRATIONS_PATH", Reset)
+	fmt.Println("Variables de entorno:")
+
+	fmt.Printf("    %s%-20s%s %s\n",
+		Cyan,
+		"DATABASE_URL",
+		Reset,
+		os.Getenv("DATABASE_URL"),
+	)
+
+	fmt.Printf("    %s%-20s%s %s\n\n",
+		Cyan,
+		"MIGRATIONS_PATH",
+		Reset,
+		os.Getenv("MIGRATIONS_PATH"),
+	)
 }

@@ -1,8 +1,0 @@
-services:
-  migrate:
-    build: .
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-      MIGRATIONS_PATH: /migrations
-    volumes:
-      - ${MIGRATIONS_PATH}:/migrations
